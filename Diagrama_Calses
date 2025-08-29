@@ -1,0 +1,39 @@
+classDiagram
+    class Usuario {
+        -idUsuario
+        -nombre
+        -correo
+        -contraseña
+        -rol
+        +registrar()
+        +iniciarSesion()
+    }
+
+    class Cliente {
+        -idCliente
+        -nombre
+        -direccion
+        -telefono
+        -correo
+        +solicitarPlan()
+    }
+
+    class PlanSeguridad {
+        -idPlan
+        -tipoPlan
+        -descripcion
+        -costoMensual
+        +asignarCliente()
+    }
+
+    class Factura {
+        -idFactura
+        -fecha
+        -montoTotal
+        +generarFactura()
+    }
+
+    Usuario "1" --> "*" Cliente : registra
+    Cliente "1" --> "*" PlanSeguridad : solicita
+    Cliente "1" --> "*" Factura : genera
+    PlanSeguridad "1" --> "*" Factura : asociado
