@@ -1,0 +1,37 @@
+erDiagram
+    Usuario {
+        int idUsuario PK
+        string nombre
+        string correo
+        string contraseña
+        string rol
+    }
+
+    Cliente {
+        int idCliente PK
+        string nombre
+        string direccion
+        string telefono
+        string correo
+        int idUsuario FK
+    }
+
+    PlanSeguridad {
+        int idPlan PK
+        string tipoPlan
+        string descripcion
+        float costoMensual
+    }
+
+    Factura {
+        int idFactura PK
+        date fecha
+        float montoTotal
+        int idCliente FK
+        int idPlan FK
+    }
+
+    Usuario ||--o{ Cliente : registra
+    Cliente ||--o{ Factura : genera
+    PlanSeguridad ||--o{ Factura : pertenece
+    Cliente }o--o{ PlanSeguridad : solicita
