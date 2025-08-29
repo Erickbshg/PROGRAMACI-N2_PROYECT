@@ -21,7 +21,7 @@
 ---
 ## 🛠️ Script de Creación
 
-```
+```sql
 -- Crear Base de Datos
 CREATE DATABASE EmpresaSeguridad;
 USE EmpresaSeguridad;
