@@ -30,7 +30,7 @@ USE EmpresaSeguridad;
 
 ### TABLAS PRINCIPALES
 
-```
+```sql
 -- Tabla de Usuarios
 CREATE TABLE Usuario (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,7 +85,7 @@ CREATE TABLE Cliente_Plan (
 
 
 ### SEGURIDAD: ROLES Y PERMISOS
-```
+```sql
 
 -- Tabla de Roles
 CREATE TABLE Rol (
@@ -119,7 +119,7 @@ CREATE TABLE Usuario_Rol (
 ```
 
 ### TABLA DE LOGS
-```
+```sql
 CREATE TABLE LogSistema (
     idLog INT AUTO_INCREMENT PRIMARY KEY,
     idUsuario INT,
@@ -130,7 +130,7 @@ CREATE TABLE LogSistema (
 );
 ```
 ### DATOS INICIALES
-```
+```sql
 -- Roles iniciales
 INSERT INTO Rol (nombreRol) VALUES ('Administrador'), ('Empleado'), ('Cliente');
 
