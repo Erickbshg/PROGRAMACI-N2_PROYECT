@@ -21,12 +21,12 @@
 ---
 ## 🛠️ Script de Creación
 
-## 📦 Estructura del Script
-
 ```sql
 -- Crear Base de Datos
 CREATE DATABASE EmpresaSeguridad;
 USE EmpresaSeguridad;
+```
+
 
 -- ==========================
 -- TABLAS PRINCIPALES
