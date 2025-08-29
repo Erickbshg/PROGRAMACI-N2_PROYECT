@@ -19,3 +19,12 @@
 [![Ver Diagrama de BD](https://img.shields.io/badge/Diagrama%20BD-0A66C2?style=for-the-badge&logo=mermaid&logoColor=white)](https://mermaid.live/edit#pako:eNp9k0Gv0zAMx79K5RPwtqntuvW1By4PcUNCenBBvZjEr4to48lJJWDah-Iz8MXIthayoi2n-Gc7_sdODqBYE9SgOnTuncFWsG9sEtaZJJ_dgGI4OVzgaS2NHmnELPdfhSKgWIT4Clgv6Oj3L4yocPfPehBqjQtR8up1RI01yqA8kzNsJ8-xsbHOp86Q9TTTOdJ7OrURUiocHDFPHb2w5TvXeXDcBVUe5WOHt0SdXM_UDmI06pm0ky8uafY8Q5qcErOfaVPsPH8gGyYQdw6daS3KeOEbet6j8oPgTMlII_ZCahfbfRgdf2J_VbElS2FSY_Z_FaeH00DWQLJcvg27N2E3DapOpmFf4ic-j7_uYZ1Mfb-fNd20Ti4yL9HXZ93OQcfhwekwblhAG6Kh9jLQAnqSHk8mnFvYgN9RTw3UYatRvjXQ2GPI2aP9wtxPacJDu5uMYa_R0_jV_kaQ1SRPPFgPdZY9no-A-gDfoV7n1Wq7LtaPZZUWRZWl2wX8CFFVsdrk27wKjnJd5tvyuICf56rZqsizrFhvinSTp1mZlsc_Q_gmKg)
 
 ---
+## 🛠️ Script de Creación
+
+```sql
+-- Ejemplo de script de creación
+CREATE TABLE Usuario (
+  id INT PRIMARY KEY,
+  nombre VARCHAR(100),
+  correo VARCHAR(100)
+);
