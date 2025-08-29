@@ -21,17 +21,16 @@
 ---
 ## 🛠️ Script de Creación
 
-```sql
+```
 -- Crear Base de Datos
 CREATE DATABASE EmpresaSeguridad;
 USE EmpresaSeguridad;
 ```
 
 
--- ==========================
--- TABLAS PRINCIPALES
--- ==========================
+### TABLAS PRINCIPALES
 
+```
 -- Tabla de Usuarios
 CREATE TABLE Usuario (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,10 +80,12 @@ CREATE TABLE Cliente_Plan (
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idPlan) REFERENCES PlanSeguridad(idPlan)
 );
+```
 
--- ==========================
--- SEGURIDAD: ROLES Y PERMISOS
--- ==========================
+
+
+### SEGURIDAD: ROLES Y PERMISOS
+```
 
 -- Tabla de Roles
 CREATE TABLE Rol (
@@ -115,11 +116,10 @@ CREATE TABLE Usuario_Rol (
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
     FOREIGN KEY (idRol) REFERENCES Rol(idRol)
 );
+```
 
--- ==========================
--- TABLA DE LOGS
--- ==========================
-
+### TABLA DE LOGS
+```
 CREATE TABLE LogSistema (
     idLog INT AUTO_INCREMENT PRIMARY KEY,
     idUsuario INT,
@@ -128,11 +128,9 @@ CREATE TABLE LogSistema (
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
-
--- ==========================
--- DATOS INICIALES
--- ==========================
-
+```
+### DATOS INICIALES
+```
 -- Roles iniciales
 INSERT INTO Rol (nombreRol) VALUES ('Administrador'), ('Empleado'), ('Cliente');
 
@@ -143,4 +141,6 @@ VALUES ('CREAR_USUARIO'), ('VER_USUARIO'), ('EDITAR_USUARIO'), ('ELIMINAR_USUARI
 
 -- Asignar permisos al rol Administrador
 INSERT INTO Rol_Permiso (idRol, idPermiso)
-SELECT 1, idPermiso FROM Permiso;  -- Rol 1 = Administrador tiene todos los permisos
+SELECT 1, idPermiso FROM Permiso;  -- Rol 1 = Administrador tiene todos los permisos```
+
+
