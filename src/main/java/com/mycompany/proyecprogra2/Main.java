@@ -3,6 +3,7 @@ package com.mycompany.proyecprogra2;
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.Usuario;
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.Cliente;
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.LogSistema;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +16,7 @@ import javax.persistence.Persistence;
  * @author 
  */
 public class Main {
+    
 
     // Se centraliza el manejo de EntityManagerFactory para todo el sistema
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyecProgra2PU");
@@ -271,7 +273,7 @@ public class Main {
     }
 
     // ---------------------------------------------
-    //  MÉTODOS CRUD CLIENTES
+    //  MÉTODOS CRUD CLIENTES (Completo)
     // ---------------------------------------------
 
     private static void menuAdministracionClientes(Scanner scanner, LogSistemaJpaController logController, Usuario usuario, boolean esAdministrador) {
@@ -321,40 +323,92 @@ public class Main {
         }
     }
 
+    //update seleccionar el id a crear:
+    
     private static void registrarCliente(Scanner scanner, Usuario usuarioActual) {
-        ClienteJpaController clienteController = new ClienteJpaController(emf);
-        LogSistemaJpaController logController = new LogSistemaJpaController(emf);
+    ClienteJpaController clienteController = new ClienteJpaController(emf);
+    UsuarioJpaController usuarioController = new UsuarioJpaController(emf);
+    LogSistemaJpaController logController = new LogSistemaJpaController(emf);
 
-        System.out.println("\n--- Registro de Cliente ---");
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Dirección: ");
-        String direccion = scanner.nextLine();
-        System.out.print("Teléfono: ");
-        String telefono = scanner.nextLine();
-        System.out.print("Correo: ");
-        String correo = scanner.nextLine();
+    // Obtener todos los usuarios con rol "Cliente"
+    List<Usuario> usuariosCliente = usuarioController.findUsuarioEntities();
+    List<Cliente> clientesRegistrados = clienteController.findClienteEntities();
 
-        if (nombre.isBlank()) {
-            System.out.println("El nombre es obligatorio.");
-            return;
-        }
-
-        Cliente cliente = new Cliente();
-        cliente.setNombre(nombre);
-        cliente.setDireccion(direccion);
-        cliente.setTelefono(telefono);
-        cliente.setCorreo(correo);
-        cliente.setIdUsuario(usuarioActual);
-
-        try {
-            clienteController.create(cliente);
-            System.out.println("Cliente registrado exitosamente.");
-            logController.registrarLog("Registro de Cliente", "Se registró el cliente: " + nombre, usuarioActual);
-        } catch (Exception e) {
-            System.out.println("Error al registrar cliente: " + e.getMessage());
+    // Filtrar usuarios que no estén en la tabla Cliente
+    List<Usuario> disponibles = new ArrayList<>();
+    for (Usuario u : usuariosCliente) {
+        if ("Cliente".equalsIgnoreCase(u.getRol())) {
+            boolean yaRegistrado = false;
+            for (Cliente c : clientesRegistrados) {
+                if (c.getIdUsuario() != null && c.getIdUsuario().getIdUsuario().equals(u.getIdUsuario())) {
+                    yaRegistrado = true;
+                    break;
+                }
+            }
+            if (!yaRegistrado) {
+                disponibles.add(u);
+            }
         }
     }
+
+    // Mostrar usuarios disponibles
+    if (disponibles.isEmpty()) {
+        System.out.println("No hay usuarios con rol 'Cliente' disponibles para registrar.");
+        return;
+    }
+
+    System.out.println("\n--- Usuarios disponibles para registrar como Cliente ---");
+    for (Usuario u : disponibles) {
+        System.out.println("ID: " + u.getIdUsuario() + " | Nombre: " + u.getNombre() + " | Correo: " + u.getCorreo());
+    }
+
+    System.out.print("Ingrese el ID del usuario que desea registrar como cliente: ");
+    int idSeleccionado = Integer.parseInt(scanner.nextLine());
+
+    Usuario usuarioSeleccionado = null;
+    for (Usuario u : disponibles) {
+        if (u.getIdUsuario() == idSeleccionado) {
+            usuarioSeleccionado = u;
+            break;
+        }
+    }
+
+    if (usuarioSeleccionado == null) {
+        System.out.println("ID inválido o usuario ya registrado como cliente.");
+        return;
+    }
+
+    // Capturar datos del cliente
+    System.out.println("\n--- Registro de Cliente ---");
+    System.out.print("Nombre: ");
+    String nombre = scanner.nextLine();
+    System.out.print("Dirección: ");
+    String direccion = scanner.nextLine();
+    System.out.print("Teléfono: ");
+    String telefono = scanner.nextLine();
+    System.out.print("Correo: ");
+    String correo = scanner.nextLine();
+
+    if (nombre.isBlank()) {
+        System.out.println("El nombre es obligatorio.");
+        return;
+    }
+
+    Cliente cliente = new Cliente();
+    cliente.setNombre(nombre);
+    cliente.setDireccion(direccion);
+    cliente.setTelefono(telefono);
+    cliente.setCorreo(correo);
+    cliente.setIdUsuario(usuarioSeleccionado);
+
+    try {
+        clienteController.create(cliente);
+        System.out.println("Cliente registrado exitosamente.");
+        logController.registrarLog("Registro de Cliente", "Se registró el cliente: " + nombre, usuarioActual);
+    } catch (Exception e) {
+        System.out.println("Error al registrar cliente: " + e.getMessage());
+    }
+}
 
     private static void verClientes(Usuario usuarioActual) {
         ClienteJpaController clienteController = new ClienteJpaController(emf);
@@ -439,4 +493,3 @@ public class Main {
         }
     }
 }
-1
