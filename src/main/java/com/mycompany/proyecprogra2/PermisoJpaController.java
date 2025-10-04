@@ -9,5 +9,5 @@ package com.mycompany.proyecprogra2;
  * @author erici
  */
 public class PermisoJpaController {
-    
+    /*indica con los id que puede hacer cada usuario*/
 }

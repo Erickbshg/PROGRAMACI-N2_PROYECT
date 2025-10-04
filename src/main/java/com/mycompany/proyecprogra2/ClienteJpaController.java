@@ -1,6 +1,6 @@
+
 package com.mycompany.proyecprogra2;
 
-// Importa la entidad Cliente y las clases necesarias para trabajar con JPA
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.Cliente;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,28 +8,63 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Controlador JPA para la entidad Cliente.
- * Permite realizar operaciones CRUD (crear, leer, actualizar, eliminar)
- * con manejo explícito de transacciones y rollback en caso de error.
+ * -------------------------------------------------------------
+ * CONTROLADOR JPA: ClienteJpaController
+ * -------------------------------------------------------------
+ * Controlador encargado de gestionar las operaciones CRUD
+ * (Crear, Leer, Actualizar, Eliminar) para la entidad Cliente.
+ * 
+ * Utiliza JPA con manejo explícito de transacciones y rollback
+ * en caso de errores.
+ * -------------------------------------------------------------
+ * Métodos principales:
+ * - create(Cliente cliente)
+ * - edit(Cliente cliente)
+ * - destroy(Integer idCliente)
+ * - findCliente(Integer idCliente)
+ * - findClienteEntities()
+ * - buscarPorNombre(String nombre)
+ * -------------------------------------------------------------
  */
 public class ClienteJpaController {
 
+    /// ---------------------------------------------
+    //  ATRIBUTOS
+    // ---------------------------------------------
     // Fábrica de EntityManager, se configura desde persistence.xml
     private EntityManagerFactory emf;
 
-    // Constructor que recibe la fábrica de EntityManager
+    /// ---------------------------------------------
+    //  CONSTRUCTOR
+    // ---------------------------------------------
+    /**
+     * Constructor que recibe la fábrica de EntityManager.
+     * @param emf Instancia de EntityManagerFactory
+     */
     public ClienteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
 
-    // Método que devuelve una instancia de EntityManager para interactuar con la base de datos
+    /// ---------------------------------------------
+    //  MÉTODOS DE APOYO
+    // ---------------------------------------------
+    /**
+     * Devuelve una instancia de EntityManager para interactuar con la base de datos.
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO CREATE (INSERTAR CLIENTE)
+    // ---------------------------------------------
     /**
      * Crea un nuevo cliente en la base de datos.
-     * Valida que el nombre no esté vacío antes de persistir.
+     * 
+     * Validaciones:
+     * - El nombre no puede estar vacío.
+     *
+     * @param cliente Objeto Cliente a registrar
      */
     public void create(Cliente cliente) {
         EntityManager em = getEntityManager();
@@ -55,9 +90,16 @@ public class ClienteJpaController {
         }
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO EDIT (ACTUALIZAR CLIENTE)
+    // ---------------------------------------------
     /**
      * Edita un cliente existente.
-     * Valida que el ID esté presente antes de hacer el merge.
+     * 
+     * Validaciones:
+     * - El cliente debe tener un ID válido para poder editarlo.
+     *
+     * @param cliente Objeto Cliente a actualizar
      */
     public void edit(Cliente cliente) {
         EntityManager em = getEntityManager();
@@ -83,9 +125,15 @@ public class ClienteJpaController {
         }
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO DESTROY (ELIMINAR CLIENTE)
+    // ---------------------------------------------
     /**
-     * Elimina un cliente por su ID.
-     * Si el cliente existe, lo elimina; si no, no hace nada.
+     * Elimina un cliente de la base de datos por su ID.
+     * 
+     * Si el cliente no existe, no realiza ninguna acción.
+     *
+     * @param idCliente ID del cliente a eliminar
      */
     public void destroy(Integer idCliente) {
         EntityManager em = getEntityManager();
@@ -103,16 +151,20 @@ public class ClienteJpaController {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            // Lanza una excepción con el mensaje de error
             throw new RuntimeException("Error al eliminar cliente: " + e.getMessage(), e);
         } finally {
             em.close(); // Cierra el EntityManager
         }
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO FIND (BUSCAR POR ID)
+    // ---------------------------------------------
     /**
      * Busca un cliente por su ID.
-     * Retorna el cliente si existe, o null si no se encuentra.
+     * 
+     * @param idCliente ID del cliente a buscar
+     * @return Cliente encontrado o null si no existe
      */
     public Cliente findCliente(Integer idCliente) {
         EntityManager em = getEntityManager();
@@ -123,31 +175,47 @@ public class ClienteJpaController {
         }
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO FIND ALL (LISTAR TODOS)
+    // ---------------------------------------------
     /**
      * Lista todos los clientes registrados en la base de datos.
+     * 
      * Ordena los resultados por nombre.
+     * 
+     * @return Lista de todos los clientes
      */
     public List<Cliente> findClienteEntities() {
         EntityManager em = getEntityManager();
         try {
             // Consulta JPQL para obtener todos los clientes ordenados por nombre
-            TypedQuery<Cliente> query = em.createQuery("SELECT c FROM Cliente c ORDER BY c.nombre", Cliente.class);
+            TypedQuery<Cliente> query = em.createQuery(
+                "SELECT c FROM Cliente c ORDER BY c.nombre", Cliente.class);
             return query.getResultList(); // Retorna la lista de clientes
         } finally {
             em.close(); // Cierra el EntityManager
         }
     }
 
+    /// ---------------------------------------------
+    //  MÉTODO BUSCAR POR NOMBRE
+    // ---------------------------------------------
     /**
      * Busca clientes por nombre (búsqueda parcial).
-     * Utiliza LIKE para encontrar coincidencias que contengan el texto ingresado.
+     * 
+     * Utiliza la cláusula LIKE para encontrar coincidencias
+     * que contengan el texto ingresado.
+     *
+     * @param nombre Nombre o parte del nombre a buscar
+     * @return Lista de clientes coincidentes
      */
     public List<Cliente> buscarPorNombre(String nombre) {
         EntityManager em = getEntityManager();
         try {
             // Consulta JPQL con filtro por nombre (insensible a mayúsculas/minúsculas)
             TypedQuery<Cliente> query = em.createQuery(
-                "SELECT c FROM Cliente c WHERE LOWER(c.nombre) LIKE LOWER(:nombre) ORDER BY c.nombre", Cliente.class);
+                "SELECT c FROM Cliente c WHERE LOWER(c.nombre) LIKE LOWER(:nombre) ORDER BY c.nombre",
+                Cliente.class);
             query.setParameter("nombre", "%" + nombre + "%"); // Parámetro con comodines
             return query.getResultList(); // Retorna la lista de coincidencias
         } finally {

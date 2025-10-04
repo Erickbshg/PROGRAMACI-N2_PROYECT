@@ -2,8 +2,13 @@ package com.mycompany.proyecprogra2;
 
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.Usuario;
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.Cliente;
+import com.mycompany.proyecprogra2.gt.edu.umg.bd.ClientePlan;
+import com.mycompany.proyecprogra2.gt.edu.umg.bd.Factura;
 import com.mycompany.proyecprogra2.gt.edu.umg.bd.LogSistema;
+import com.mycompany.proyecprogra2.gt.edu.umg.bd.PlanSeguridad;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManagerFactory;
@@ -115,6 +120,15 @@ public class Main {
                 case "2":
                     menuAdministracionClientes(scanner, logController, usuario, true);
                     break;
+                case "3":
+                    registrarPlanSeguridad(scanner, usuario);
+                    break;
+                case "4":
+                    asignarPlanACliente(scanner, usuario);
+                    break;
+                case "5":
+                     generarFactura(scanner, usuario);
+                    break;
                 case "6":
                     mostrarLogs(logController);
                     break;
@@ -127,7 +141,159 @@ public class Main {
             }
         }
     }
+    
+    private static void generarFactura(Scanner scanner, Usuario usuarioActual) {
+    ClienteJpaController clienteController = new ClienteJpaController(emf);
+    PlanSeguridadJpaController planController = new PlanSeguridadJpaController(emf);
+    FacturaJpaController facturaController = new FacturaJpaController(emf);
+    LogSistemaJpaController logController = new LogSistemaJpaController(emf);
 
+    List<Cliente> clientes = clienteController.findClienteEntities();
+    List<PlanSeguridad> planes = planController.findPlanSeguridadEntities();
+
+    if (clientes.isEmpty()) {
+        System.out.println("No hay clientes registrados.");
+        return;
+    }
+    if (planes.isEmpty()) {
+        System.out.println("No hay planes disponibles.");
+        return;
+    }
+
+    System.out.println("\n--- Clientes disponibles ---");
+    for (Cliente c : clientes) {
+        System.out.println("ID: " + c.getIdCliente() + " | Nombre: " + c.getNombre());
+    }
+
+    System.out.print("Ingrese el ID del cliente: ");
+    int idCliente = Integer.parseInt(scanner.nextLine());
+    Cliente cliente = clienteController.findCliente(idCliente);
+    if (cliente == null) {
+        System.out.println("Cliente no encontrado.");
+        return;
+    }
+
+    System.out.println("\n--- Planes disponibles ---");
+    for (PlanSeguridad p : planes) {
+        System.out.println("ID: " + p.getIdPlan() + " | Tipo: " + p.getTipoPlan() + " | Costo: Q" + p.getCostoMensual());
+    }
+
+    System.out.print("Ingrese el ID del plan: ");
+    int idPlan = Integer.parseInt(scanner.nextLine());
+    PlanSeguridad plan = planController.findPlanSeguridad(idPlan);
+    if (plan == null) {
+        System.out.println("Plan no encontrado.");
+        return;
+    }
+
+    Factura factura = new Factura();
+    factura.setIdCliente(cliente);
+    factura.setIdPlan(plan);
+    factura.setFecha(new Date());
+    factura.setMontoTotal(plan.getCostoMensual());
+
+    try {
+        facturaController.create(factura);
+        System.out.println("Factura generada exitosamente.");
+        logController.registrarLog("Generación de Factura", "Factura emitida para cliente " + cliente.getNombre() + " por el plan " + plan.getTipoPlan(), usuarioActual);
+    } catch (Exception e) {
+        System.out.println("Error al generar factura: " + e.getMessage());
+    }
+}
+
+    
+    
+    private static void registrarPlanSeguridad(Scanner scanner, Usuario usuarioActual) {
+    PlanSeguridadJpaController planController = new PlanSeguridadJpaController(emf);
+    LogSistemaJpaController logController = new LogSistemaJpaController(emf);
+
+    System.out.println("\n--- Registro de Plan de Seguridad ---");
+    System.out.print("Tipo de plan: ");
+    String tipo = scanner.nextLine();
+    System.out.print("Descripción: ");
+    String descripcion = scanner.nextLine();
+    System.out.print("Costo mensual: ");
+    BigDecimal costo;
+    try {
+        costo = new BigDecimal(scanner.nextLine());
+    } catch (NumberFormatException e) {
+        System.out.println("Costo inválido.");
+        return;
+    }
+
+    PlanSeguridad plan = new PlanSeguridad();
+    plan.setTipoPlan(tipo);
+    plan.setDescripcion(descripcion);
+    plan.setCostoMensual(costo);
+
+    try {
+        planController.create(plan);
+        System.out.println("Plan registrado exitosamente.");
+        logController.registrarLog("Registro de Plan", "Se registró el plan: " + tipo, usuarioActual);
+    } catch (Exception e) {
+        System.out.println("Error al registrar plan: " + e.getMessage());
+    }
+}
+
+   
+    private static void asignarPlanACliente(Scanner scanner, Usuario usuarioActual) {
+    ClienteJpaController clienteController = new ClienteJpaController(emf);
+    PlanSeguridadJpaController planController = new PlanSeguridadJpaController(emf);
+    ClientePlanJpaController clientePlanController = new ClientePlanJpaController(emf);
+    LogSistemaJpaController logController = new LogSistemaJpaController(emf);
+
+    List<Cliente> clientes = clienteController.findClienteEntities();
+    List<PlanSeguridad> planes = planController.findPlanSeguridadEntities();
+
+    if (clientes.isEmpty()) {
+        System.out.println("No hay clientes registrados.");
+        return;
+    }
+    if (planes.isEmpty()) {
+        System.out.println("No hay planes disponibles.");
+        return;
+    }
+
+    System.out.println("\n--- Clientes disponibles ---");
+    for (Cliente c : clientes) {
+        System.out.println("ID: " + c.getIdCliente() + " | Nombre: " + c.getNombre());
+    }
+
+    System.out.print("Ingrese el ID del cliente: ");
+    int idCliente = Integer.parseInt(scanner.nextLine());
+    Cliente cliente = clienteController.findCliente(idCliente);
+    if (cliente == null) {
+        System.out.println("Cliente no encontrado.");
+        return;
+    }
+
+    System.out.println("\n--- Planes disponibles ---");
+    for (PlanSeguridad p : planes) {
+        System.out.println("ID: " + p.getIdPlan() + " | Tipo: " + p.getTipoPlan() + " | Costo: Q" + p.getCostoMensual());
+    }
+
+    System.out.print("Ingrese el ID del plan a asignar: ");
+    int idPlan = Integer.parseInt(scanner.nextLine());
+    PlanSeguridad plan = planController.findPlanSeguridad(idPlan);
+    if (plan == null) {
+        System.out.println("Plan no encontrado.");
+        return;
+    }
+
+    ClientePlan asignacion = new ClientePlan();
+    asignacion.setCliente(cliente);
+    asignacion.setPlanSeguridad(plan);
+
+    try {
+        clientePlanController.create(asignacion);
+        System.out.println("Plan asignado exitosamente al cliente.");
+        logController.registrarLog("Asignación de Plan", "Se asignó el plan " + plan.getTipoPlan() + " al cliente " + cliente.getNombre(), usuarioActual);
+    } catch (Exception e) {
+        System.out.println("Error al asignar plan: " + e.getMessage());
+    }
+}
+
+    
     /**
      * Menú para usuarios con rol Empleado
      */
@@ -146,6 +312,12 @@ public class Main {
                 case "1":
                     menuAdministracionClientes(scanner, logController, usuario, false);
                     break;
+                case "2": 
+                    asignarPlanACliente(scanner, usuario);
+                    break;
+                case "3":
+                     generarFactura(scanner, usuario);
+                     break;
                 case "4":
                     logController.registrarLog("Logout", "Cierre de sesión del empleado", usuario);
                     salir = true;
@@ -491,5 +663,5 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Error al eliminar cliente: " + e.getMessage());
         }
-    }
+    }   
 }

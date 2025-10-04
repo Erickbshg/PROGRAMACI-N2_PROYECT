@@ -9,5 +9,5 @@ package com.mycompany.proyecprogra2;
  * @author erici
  */
 public class RolJpaController {
-    
+    /*Aqui no va nada por que solo es la tabla de roles por el momento no se usuara*/
 }
