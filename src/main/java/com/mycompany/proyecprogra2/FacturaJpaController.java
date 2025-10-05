@@ -131,4 +131,19 @@ public class FacturaJpaController {
             em.close(); // Cierra el EntityManager
         }
     }
+    
+    
+    public List<Factura> findFacturasPorCliente(Integer idCliente) {
+    EntityManager em = getEntityManager();
+    try {
+        TypedQuery<Factura> query = em.createQuery(
+            "SELECT f FROM Factura f WHERE f.idCliente.idCliente = :idCliente ORDER BY f.fecha DESC",
+            Factura.class);
+        query.setParameter("idCliente", idCliente);
+        return query.getResultList();
+    } finally {
+        em.close();
+        }
+    }
+
 }

@@ -369,7 +369,38 @@ public class Main {
                     System.out.println("No se encontraron datos asociados a este usuario.");
                 }
                 break;
+            case "2":
+    // Buscar cliente asociado al usuario actual
+    List<Cliente> clientesFactura = clienteController.findClienteEntities();
+    Cliente clienteActual = null;
+    for (Cliente c : clientesFactura) {
+        if (c.getIdUsuario() != null && c.getIdUsuario().getIdUsuario().equals(usuario.getIdUsuario())) {
+            clienteActual = c;
+            break;
+        }
+    }
 
+    if (clienteActual != null) {
+        FacturaJpaController facturaController = new FacturaJpaController(emf);
+        List<Factura> facturas = facturaController.findFacturasPorCliente(clienteActual.getIdCliente());
+
+        System.out.println("\n--- Mis Facturas ---");
+        if (facturas.isEmpty()) {
+            System.out.println("No tienes facturas registradas.");
+        } else {
+            for (Factura f : facturas) {
+                System.out.println("Factura ID: " + f.getIdFactura());
+                System.out.println("Fecha: " + f.getFecha());
+                System.out.println("Monto Total: Q" + f.getMontoTotal());
+                System.out.println("-------------------------");
+            }
+        }
+
+        logController.registrarLog("Consulta de Facturas", "El cliente visualizó sus facturas", usuario);
+    } else {
+        System.out.println("No se encontró el cliente asociado al usuario.");
+    }
+    break;
             case "3":
                 logController.registrarLog("Logout", "Cierre de sesión del cliente", usuario);
                 salir = true;
