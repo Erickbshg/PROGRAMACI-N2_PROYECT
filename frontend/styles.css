@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #0a0a0a;
+  color: #e5e5e5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.25rem;
+  color: #999;
+  line-height: 1.6;
+}
+
+.calculator {
+  background-color: #141414;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  color: #e5e5e5;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.operations {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  color: #e5e5e5;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: capitalize;
+}
+
+button:hover {
+  background-color: #252525;
+  border-color: #555;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.result {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #0a0a0a;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-content {
+  text-align: center;
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.result-value {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #e5e5e5;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.loading {
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .calculator {
+    padding: 1.5rem;
+  }
+
+  .operations {
+    grid-template-columns: 1fr;
+  }
+}

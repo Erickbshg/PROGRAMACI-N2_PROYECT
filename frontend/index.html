@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora API</title>
+    <!-- Linking external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+
+            <h1>Calculadora<br>Operaciones</h1>
+            <p class="description">Realiza operaciones matemáticas básicas consumiendo una API REST</p>
+        </div>
+
+        <div class="calculator">
+            <div class="input-group">
+                <label for="numA">Número A</label>
+                <input type="number" id="numA" value="10" step="any">
+            </div>
+
+            <div class="input-group">
+                <label for="numB">Número B</label>
+                <input type="number" id="numB" value="5" step="any">
+            </div>
+
+            <div class="operations">
+                <button onclick="calcular('suma')">Suma</button>
+                <button onclick="calcular('resta')">Resta</button>
+                <button onclick="calcular('multiplicacion')">Multiplicación</button>
+                <button onclick="calcular('division')">División</button>
+            </div>
+
+            <div class="result" id="result">
+                <div class="result-content">
+                    <div class="result-label">Resultado</div>
+                    <div class="result-value">—</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linking external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

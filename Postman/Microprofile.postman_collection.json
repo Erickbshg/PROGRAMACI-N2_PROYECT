@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "a14189d4-0436-4ae3-ad89-eb5264bc14ed",
+		"name": "Microprofile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46046345",
+		"_collection_link": "https://erick-2626579.postman.co/workspace/Erick's-Workspace~c481e0ea-916c-415a-8fec-38d8cb417c89/collection/46046345-a14189d4-0436-4ae3-ad89-eb5264bc14ed?action=share&source=collection_link&creator=46046345"
+	},
+	"item": [
+		{
+			"name": "Hello World",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/hello",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suma",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/Operacion?a=10&b=5&op=suma",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"Operacion"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "10"
+						},
+						{
+							"key": "b",
+							"value": "5"
+						},
+						{
+							"key": "op",
+							"value": "suma"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resta",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/Operacion?a=10&b=5&op=resta",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"Operacion"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "10"
+						},
+						{
+							"key": "b",
+							"value": "5"
+						},
+						{
+							"key": "op",
+							"value": "resta"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiplicación",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/Operacion?a=10&b=5&op=multiplicacion",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"Operacion"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "10"
+						},
+						{
+							"key": "b",
+							"value": "5"
+						},
+						{
+							"key": "op",
+							"value": "multiplicacion"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "División",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/Operacion?a=10&b=5&op=division",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"Operacion"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "10"
+						},
+						{
+							"key": "b",
+							"value": "5"
+						},
+						{
+							"key": "op",
+							"value": "division"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "División por cero (error)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.12:8080/data/Operacion?a=10&b=0&op=division",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"12"
+					],
+					"port": "8080",
+					"path": [
+						"data",
+						"Operacion"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "10"
+						},
+						{
+							"key": "b",
+							"value": "0"
+						},
+						{
+							"key": "op",
+							"value": "division"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
