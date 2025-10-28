@@ -9,9 +9,9 @@ The generation of the executable jar file can be performed by issuing the follow
 
     mvn clean package
 
-This will create an executable jar file **demoMicroProfile-microbundle.jar** within the _target_ maven folder. This can be started by executing the following command
+This will create an executable jar file **demo-microbundle.jar** within the _target_ maven folder. This can be started by executing the following command
 
-    java -jar target/demoMicroProfile-microbundle.jar
+    java -jar target/demo-microbundle.jar
 
 
 
