@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Manager - Clientes y Productos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>CRUD Manager</h1>
+            <p>Gestiona tus clientes y productos en un solo lugar</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="clientes">Clientes</button>
+            <button class="tab-btn" data-tab="productos">Productos</button>
+        </div>
+
+        <!-- Sección de Clientes -->
+        <div id="clientes-section" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Clientes</h2>
+                        <p class="subtitle">Gestiona tu base de datos de clientes</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openClientModal()">Agregar Cliente</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Teléfono</th>
+                                    <th>Correo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientes-table">
+                                <tr>
+                                    <td colspan="6" class="loading">Cargando clientes...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Productos -->
+        <div id="productos-section" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Productos</h2>
+                        <p class="subtitle">Gestiona tu inventario de productos</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openProductModal()">Agregar Producto</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos-table">
+                                <tr>
+                                    <td colspan="5" class="loading">Cargando productos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Clientes -->
+    <div id="client-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="client-modal-title">Agregar Cliente</h3>
+                <button class="close-btn" onclick="closeClientModal()">&times;</button>
+            </div>
+            <form id="client-form" onsubmit="saveClient(event)">
+                <input type="hidden" id="client-id">
+                <div class="form-group">
+                    <label for="client-nombre">Nombre</label>
+                    <input type="text" id="client-nombre" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="client-direccion">Dirección</label>
+                    <input type="text" id="client-direccion" required placeholder="123 Calle Principal, Zona 1">
+                </div>
+                <div class="form-group">
+                    <label for="client-telefono">Teléfono</label>
+                    <input type="tel" id="client-telefono" required placeholder="12345678">
+                </div>
+                <div class="form-group">
+                    <label for="client-correo">Correo</label>
+                    <input type="email" id="client-correo" required placeholder="juan@ejemplo.com">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeClientModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Productos -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="product-modal-title">Agregar Producto</h3>
+                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="product-form" onsubmit="saveProduct(event)">
+                <input type="hidden" id="product-id">
+                <div class="form-group">
+                    <label for="product-nombre">Nombre</label>
+                    <input type="text" id="product-nombre" required placeholder="Mouse Inalámbrico">
+                </div>
+                <div class="form-group">
+                    <label for="product-descripcion">Descripción</label>
+                    <input type="text" id="product-descripcion" required placeholder="Mouse ergonómico">
+                </div>
+                <div class="form-group">
+                    <label for="product-precio">Precio</label>
+                    <input type="number" id="product-precio" step="0.01" required placeholder="29.99">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

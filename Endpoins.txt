@@ -1,0 +1,19 @@
+Clientes:
+
+GET http://localhost:8080/clientes
+
+POST http://localhost:8080/clientes
+
+PUT http://localhost:8080/clientes/{id}
+
+DELETE http://localhost:8080/clientes/{id}
+
+Productos:
+
+GET http://localhost:8080/productos
+
+POST http://localhost:8080/productos
+
+PUT http://localhost:8080/productos/{id}
+
+DELETE http://localhost:8080/productos/{id}
